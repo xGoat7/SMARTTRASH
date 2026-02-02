@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartTrash — Bank Sampah Digital</title>
+  <meta name="description" content="Sistem Informasi Bank Sampah Digital untuk pengelolaan sampah, tabungan, dan penjadwalan pickup berbasis teknologi.">
+
+  <style>
+    :root{
+      --brand:#16a38b;
+      --brand2:#22c55e;
+      --bg:#ffffff;
+      --card:#f9fafb;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.6;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(22, 163, 74, 0);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(22, 163, 74, 0.3);
+      }
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit}
+    .container{max-width:1100px;margin:auto;padding:0 16px}
+
+    /* HEADER */
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.9);
+      backdrop-filter:blur(6px);
+      border-bottom:1px solid var(--border);
+      animation: slideInDown 0.5s ease-out;
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nav{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 0;
+    }
+    .brand{
+      display:flex;gap:10px;align-items:center;font-weight:700;
+      animation: slideInLeft 0.6s ease-out;
+    }
+    .logo{
+      width:34px;height:34px;border-radius:50%;
+      background:var(--brand);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:800;
+      animation: float 3s ease-in-out infinite;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      animation: glow 0.6s ease-in-out infinite, float 3s ease-in-out infinite;
+      transform: scale(1.1);
+    }
+    .menu{display:none;gap:16px}
+    .menu a{
+      font-size:14px;color:#374151;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .menu a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--brand);
+      transition: width 0.3s ease;
+    }
+    .menu a:hover::after{width: 100%}
+    .menu a:hover{color:var(--brand)}
+    .btn{
+      padding:8px 14px;border-radius:10px;
+      border:1px solid var(--border);
+      background:#fff;font-size:14px;cursor:pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .btn.primary{
+      background:var(--brand);
+      color:#fff;border-color:var(--brand);
+      animation: slideInRight 0.6s ease-out;
+    }
+    .btn.primary:hover {
+      background: var(--brand2);
+      box-shadow: 0 6px 20px rgba(22, 163, 74, 0.3);
+      transform: translateY(-2px);
+    }
+    .hamburger{display:inline-flex}
+
+    @media(min-width:768px){
+      .menu{display:flex}
+      .hamburger{display:none}
+    }
+
+    /* HERO */
+    .hero{
+      background:linear-gradient(180deg,#ecfdf5,#fff);
+      border-bottom:1px solid var(--border);
+    }
+    .hero-grid{
+      display:grid;gap:32px;
+      padding:64px 0;
+    }
+    .hero-grid > div:first-child {
+      animation: slideInLeft 0.7s ease-out;
+    }
+    .hero-grid > div:last-child {
+      animation: slideInRight 0.7s ease-out;
+    }
+    @media(min-width:768px){
+      .hero-grid{grid-template-columns:1fr 1fr}
+    }
+    h1{
+      font-size:36px;margin:0 0 12px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    .lead{
+      color:var(--muted);font-size:18px;margin-bottom:20px;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+
+    .mock{
+      background:#fff;border-radius:18px;
+      box-shadow:0 12px 30px rgba(0,0,0,.08);
+      display:flex;align-items:center;justify-content:center;
+      animation: float 4s ease-in-out infinite;
+    }
+    .mock-inner{
+      width:90%;height:80%;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      border-radius:16px;color:#fff;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      text-align:center;
+      transition: all 0.3s ease;
+    }
+
+    .mock:hover .mock-inner {
+      transform: scale(1.05);
+      box-shadow: 0 20px 40px rgba(22, 163, 74, 0.2);
+    }
+
+    section{padding:48px 0}
+    h2{margin:0 0 8px}
+    .muted{color:var(--muted);font-size:14px}
+
+    /* GRID */
+    .grid{display:grid;gap:16px}
+    @media(min-width:768px){
+      .cols-3{grid-template-columns:repeat(3,1fr)}
+      .cols-4{grid-template-columns:repeat(4,1fr)}
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px;
+      transition:.3s;
+      animation: fadeInUp 0.6s ease-out both;
+    }
+
+    .grid .card:nth-child(1) { animation-delay: 0.1s; }
+    .grid .card:nth-child(2) { animation-delay: 0.2s; }
+    .grid .card:nth-child(3) { animation-delay: 0.3s; }
+    .grid .card:nth-child(4) { animation-delay: 0.4s; }
+
+    .card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 16px 32px rgba(22, 163, 74, 0.15);
+      border-color: var(--brand);
+    }
+
+    .card h3 {
+      transition: color 0.3s ease;
+    }
+
+    .card:hover h3 {
+      color: var(--brand);
+    }
+    .price{
+      font-size:20px;font-weight:700;
+      color: var(--brand);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    footer{
+      background:#f9fafb;border-top:1px solid var(--border);
+      padding:32px 0;
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    section {
+      padding:48px 0;
+      animation: fadeInUp 0.7s ease-out;
+    }
+
+    section h2 {
+      animation: fadeInUp 0.7s ease-out 0.1s both;
+    }
+
+    section .muted {
+      animation: fadeInUp 0.7s ease-out 0.2s both;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <div class="logo">S</div>
+      <span>SmartTrash</span>
+    </div>
+    <nav class="menu">
+      <a href="#fitur">Fitur</a>
+      <a href="#layanan">Layanan</a>
+      <a href="#harga">Harga</a>
+      <a href="#edukasi">Edukasi</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <button class="btn hamburger">Menu</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <h1>Sistem Informasi Bank Sampah Digital</h1>
+      <p class="lead">
+        SmartTrash membantu masyarakat mengelola sampah menjadi nilai ekonomi
+        melalui sistem informasi berbasis web.
+      </p>
+      <a class="btn primary" href="#layanan">Mulai Sekarang</a>
+    </div>
+    <div class="mock">
+      <div class="mock-inner">
+        <h3>#SampahJadiUang</h3>
+        <p>Teknologi untuk Ekonomi Sirkular</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FITUR -->
+<section id="fitur">
+  <div class="container">
+    <h2>Fitur Sistem</h2>
+    <p class="muted">Fitur utama dalam sistem informasi bank sampah</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <h3>Manajemen Nasabah</h3>
+        <p class="muted">Pendataan pengguna dan riwayat setoran sampah.</p>
+      </div>
+      <div class="card">
+        <h3>Tabungan Digital</h3>
+        <p class="muted">Saldo otomatis berdasarkan berat dan jenis sampah.</p>
+      </div>
+      <div class="card">
+        <h3>Penjadwalan Pickup</h3>
+        <p class="muted">Atur penjemputan sampah secara online.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAYANAN -->
+<section id="layanan" style="background:#f9fafb">
+  <div class="container">
+    <h2>Layanan Bank Sampah</h2>
+    <div class="grid cols-4">
+      <div class="card">Plastik</div>
+      <div class="card">Kertas</div>
+      <div class="card">Logam</div>
+      <div class="card">Kaca</div>
+    </div>
+  </div>
+</section>
+
+<!-- HARGA -->
+<section id="harga">
+  <div class="container">
+    <h2>Estimasi Harga Sampah</h2>
+    <div class="grid cols-3">
+      <div class="card">
+        <h3>Botol Plastik PET</h3>
+        <div class="price">Rp 5.000 / kg</div>
+      </div>
+      <div class="card">
+        <h3>Kardus</h3>
+        <div class="price">Rp 2.500 / kg</div>
+      </div>
+      <div class="card">
+        <h3>Kaleng Aluminium</h3>
+        <div class="price">Rp 18.000 / kg</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUKASI -->
+<section id="edukasi" style="background:#f9fafb">
+  <div class="container">
+    <h2>Edukasi Lingkungan</h2>
+    <div class="grid cols-3">
+      <div class="card">Cara Memilah Sampah</div>
+      <div class="card">Manfaat Bank Sampah</div>
+      <div class="card">Ekonomi Sirkular</div>
+    </div>
+  </div>
+</section>
+
+<footer id="kontak">
+  <div class="container">
+    <p class="muted">
+      © 2026 SmartTrash — Sistem Informasi Kewirausahaan  
+      <br>Fakultas Teknologi Informasi
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
